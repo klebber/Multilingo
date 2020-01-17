@@ -45,11 +45,6 @@ namespace Client
                 return false;
             }
         }
-
-        internal void DiskonektujSe()
-        {
-            klijentskiSocket.Close();
-        }
         
         internal bool PosaljiZahtev(Zahtev zahtev)
         {
@@ -85,10 +80,6 @@ namespace Client
                 Debug.WriteLine("Prihvati odg u komunikacija");
                 klijentskiSocket.Close();
                 return null;
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
 

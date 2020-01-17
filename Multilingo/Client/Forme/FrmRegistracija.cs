@@ -13,23 +13,22 @@ namespace Client.Forme
 
         private void button1_Click(object sender, EventArgs e)
         {
-            KontrolerKI.Instance.Registracija(txtKorIme.Text, txtPass.Text, txtIme.Text, txtPrezime.Text, txtEmail.Text, txtBroj.Text, (int)numGodine.Value, cbPol.SelectedItem.ToString());
+            if (!Validacija()) return;
+            if(KontrolerKI.Instance.Registracija(txtKorIme.Text, txtPass.Text, txtIme.Text, txtPrezime.Text, 
+                txtEmail.Text, txtBroj.Text, (int)numGodine.Value, cbPol.SelectedItem.ToString(), out string poruka))
+            {
+                MessageBox.Show(poruka);
+                Dispose();
+            }
+            else
+            {
+                MessageBox.Show(poruka);
+            }
         }
 
-        internal void FailedReg(string poruka)
+        private bool Validacija()
         {
-            MessageBox.Show(poruka);
-        }
-
-        internal void SuccessfulReg(string poruka)
-        {
-            MessageBox.Show(poruka);
-            Invoke(new Action(() => Dispose()));
-        }
-
-        internal void Kill()
-        {
-            Invoke(new Action(() => Dispose()));
+            return true;
         }
     }
 }

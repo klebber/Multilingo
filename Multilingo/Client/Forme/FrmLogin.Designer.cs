@@ -38,6 +38,7 @@
             this.txtPass = new System.Windows.Forms.TextBox();
             this.txtUser = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnConnect = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -45,6 +46,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnConnect);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
@@ -134,6 +136,16 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // btnConnect
+            // 
+            this.btnConnect.Location = new System.Drawing.Point(200, 481);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(128, 28);
+            this.btnConnect.TabIndex = 1;
+            this.btnConnect.Text = "Connect";
+            this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            // 
             // FrmLogin
             // 
             this.AcceptButton = this.btnPrijava;
@@ -165,6 +177,7 @@
         private System.Windows.Forms.TextBox txtUser;
         private System.Windows.Forms.Button btnRegistracija;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnConnect;
     }
 }
 

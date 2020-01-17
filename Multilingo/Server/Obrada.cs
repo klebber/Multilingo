@@ -78,8 +78,7 @@ namespace Server
                     case Operacija.LOGOUT:
                         Korisnik = new Korisnik() { KorisnickoIme = "Gost" };
                         Kontroler.Instance.OnPrijavljen();
-                        Debug.WriteLine("S: uspesan logout");
-                        return null;
+                        break;
                     case Operacija.VRATI_POLAZNIKE:
                         break;
                     case Operacija.NADJI_POLAZNIKE:

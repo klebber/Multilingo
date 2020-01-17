@@ -45,19 +45,12 @@ namespace Client
 
         public bool PoveziSe()
         {
-            bool rez = Komunikacija.Instance.PoveziSe();
-            if (obradaOdgovora == null || !obradaOdgovora.IsAlive)
-            {
-                obradaOdgovora = new Thread(Obrada);
-                obradaOdgovora.IsBackground = true;
-                obradaOdgovora.Start(); 
-            }
-            return rez;
+            return Komunikacija.Instance.PoveziSe();
         }
 
-        public bool Login(string user, string pass)
+        public bool Login(string user, string pass, out string poruka)
         {
-            return Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            if (!Komunikacija.Instance.PosaljiZahtev(new Zahtev()
             {
                 Operacija = Operacija.LOGIN,
                 Objekat = new Korisnik()
@@ -65,13 +58,42 @@ namespace Client
                     KorisnickoIme = user,
                     Lozinka = pass
                 }
-            });
+            }))
+            {
+                poruka = "Server nije dostupan!";
+                return false;
+            }
+            else
+            {
+                Odgovor o = Komunikacija.Instance.PrihvatiOdgovor();
+                poruka = o.Poruka;
+                if (o.Signal == Signal.ERROR)
+                    return false;
+                else
+                {
+                    Sesija.Instance.Korisnik = (Korisnik)o.Objekat;
+                    obradaOdgovora = new Thread(Obrada);
+                    obradaOdgovora.IsBackground = true;
+                    obradaOdgovora.Start();
+                    return true;
+                }
+            }
         }
 
-        public void Registracija(string user, string pass, string ime, string prezime, string email, 
-            string broj, int godine, string pol)
+        public void Logout()
         {
             Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.LOGOUT
+            });
+            Sesija.Instance.Korisnik = null;
+            kraj = false;
+        }
+
+        public bool Registracija(string user, string pass, string ime, string prezime, string email, 
+            string broj, int godine, string pol, out string poruka)
+        {
+            if(!Komunikacija.Instance.PosaljiZahtev(new Zahtev()
             {
                 Operacija = Operacija.KREIRAJ_NALOG_POLAZNIKA,
                 Objekat = new Polaznik()
@@ -85,7 +107,20 @@ namespace Client
                     Godine = godine,
                     Pol = pol
                 }
-            });
+            }))
+            {
+                poruka = "Server nije dostupan";
+                return false;
+            }
+            else
+            {
+                Odgovor o = Komunikacija.Instance.PrihvatiOdgovor();
+                poruka = o.Poruka;
+                if (o.Signal == Signal.ERROR)
+                    return false;
+                else
+                    return true;
+            }
         }
         
         private void Obrada()
@@ -96,23 +131,10 @@ namespace Client
                 while (!k)
                 {
                     Odgovor o = Komunikacija.Instance.PrihvatiOdgovor();
-                    if (o == null) continue;
                     switch (o.Operacija)
                     {
-                        case Operacija.LOGIN:
-                            if (o.Signal == Signal.ERROR)
-                                frmLogin.FailedLogin(o.Poruka);
-                            else
-                            {
-                                frmLogin.SuccessfulLogin((Korisnik)o.Objekat);
-                                Sesija.Instance.Korisnik = (Korisnik)o.Objekat;
-                            }
-                            break;
-                        case Operacija.KREIRAJ_NALOG_POLAZNIKA:
-                            if (o.Signal == Signal.ERROR)
-                                frmRegistracija.FailedReg(o.Poruka);
-                            else
-                                frmRegistracija.SuccessfulReg(o.Poruka);
+                        case Operacija.LOGOUT:
+                            k = true;
                             break;
                     }
                 }
@@ -125,6 +147,7 @@ namespace Client
             catch (SerializationException)
             {
                 MessageBox.Show("Izgubljena konekcija sa serverom.");
+                Sesija.Instance.Korisnik = null;
                 kraj = false;
                 DisposeForms();
             }
@@ -133,10 +156,10 @@ namespace Client
 
         private void DisposeForms()
         {
-            if (frmRegistracija != null && frmRegistracija.Created) frmRegistracija.Kill();
-            if (frmAdmin != null && frmAdmin.Created) frmAdmin.Kill();
-            if (frmPolaznik != null && frmPolaznik.Created) frmPolaznik.Kill();
-            if (frmLogin != null && frmLogin.Created) frmLogin.Kill();
+            if (frmRegistracija != null && frmRegistracija.Created) frmRegistracija.Invoke(new Action(() => frmRegistracija.Dispose()));
+            if (frmAdmin != null && frmAdmin.Created) frmAdmin.Invoke(new Action(() => frmAdmin.Dispose()));
+            if (frmPolaznik != null && frmPolaznik.Created) frmPolaznik.Invoke(new Action(() => frmPolaznik.Dispose()));
+            if (frmLogin != null && frmLogin.Created) frmLogin.Invoke(new Action(() => frmLogin.Dispose()));
         }
     }
 }

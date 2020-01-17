@@ -12,26 +12,37 @@ namespace Client
         {
             InitializeComponent();
             CenterToScreen();
-            Reconnect();
+            Connect();
         }
 
-        private void Reconnect()
+        private bool Connect()
         {
-            DisableForm();
-            while (!KontrolerKI.Instance.PoveziSe())
+            if (KontrolerKI.Instance.PoveziSe())
             {
-                Thread.Sleep(1000);
+                EnableForm();
+                return true;
             }
-            EnableForm();
+            else
+            {
+                DisableForm();
+                return false;
+            }
         }
 
         private void btnPrijava_Click(object sender, EventArgs e)
         {
-            if (!KontrolerKI.Instance.Login(txtUser.Text, txtPass.Text))
+            if (!KontrolerKI.Instance.Login(txtUser.Text, txtPass.Text, out string poruka))
             {
-                MessageBox.Show("Server nije dostupan.");
-                DisableForm();
-                Reconnect();
+                Connect();
+                MessageBox.Show(poruka);
+            }
+            else
+            {
+                Dispose();
+                if (Sesija.Instance.Korisnik is Administrator)
+                    (KontrolerKI.Instance.frmAdmin = new Forme.FrmAdmin()).ShowDialog();
+                else
+                    (KontrolerKI.Instance.frmPolaznik = new Forme.FrmPolaznik()).ShowDialog();
             }
         }
 
@@ -44,15 +55,16 @@ namespace Client
         {
         }
 
-        private void EnableForm()
+        public void EnableForm()
         {
             txtUser.Enabled = true;
             txtPass.Enabled = true;
             btnPrijava.Enabled = true;
             btnRegistracija.Enabled = true;
+            btnConnect.Visible = false;
         }
 
-        private void DisableForm()
+        public void DisableForm()
         {
             txtUser.Text = "";
             txtPass.Text = "";
@@ -60,28 +72,12 @@ namespace Client
             txtPass.Enabled = false;
             btnPrijava.Enabled = false;
             btnRegistracija.Enabled = false;
+            btnConnect.Visible = true;
         }
 
-        internal void FailedLogin(string poruka)
+        private void btnConnect_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(poruka);
-        }
-
-        internal void SuccessfulLogin(Korisnik k)
-        {
-            Invoke(new Action(() => 
-            {
-                Dispose();
-                if(k is Administrator)
-                    (KontrolerKI.Instance.frmAdmin = new Forme.FrmAdmin()).ShowDialog();
-                else
-                    (KontrolerKI.Instance.frmPolaznik = new Forme.FrmPolaznik()).ShowDialog();
-            }));
-        }
-
-        internal void Kill()
-        {
-            Invoke(new Action(() => Dispose()));
+            if (!Connect()) MessageBox.Show("Server nije dostupan");
         }
     }
 }

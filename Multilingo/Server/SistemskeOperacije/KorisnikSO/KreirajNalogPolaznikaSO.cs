@@ -13,7 +13,8 @@ namespace Server.SistemskeOperacije.KorisnikSO
         protected override void Validacija(object objekat)
         {
             Korisnik k = objekat as Polaznik;
-            if (Broker.Instance.Select(new Polaznik() { KorisnickoIme = k.KorisnickoIme }) != null)
+            if (Broker.Instance.Select(new Administrator() { KorisnickoIme = k.KorisnickoIme }) != null 
+                || Broker.Instance.Select(new Polaznik() { KorisnickoIme = k.KorisnickoIme }) != null)
             {
                 throw new SOException("Ovo korisnicko ime je zauzeto!");
             }
