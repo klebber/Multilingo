@@ -52,7 +52,7 @@ namespace Client.Forme
                 txtPrezime.BackColor = Color.LightCoral;
                 rez = false;
             }
-            if (txtEmail.Text == string.Empty || txtEmail.Text.Any(c => !char.IsLetterOrDigit(c)))
+            if (txtEmail.Text == string.Empty)
             {
                 txtEmail.BackColor = Color.LightCoral;
                 rez = false;

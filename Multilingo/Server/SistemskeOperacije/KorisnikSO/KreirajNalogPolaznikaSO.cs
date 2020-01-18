@@ -28,7 +28,7 @@ namespace Server.SistemskeOperacije.KorisnikSO
             object id = Broker.Instance.Insert(k);
             if (id == null)
                 throw new SOException("Greska prilikom registracije!");
-            p.ID = (int)id;
+            p.IDKorisnika = (int)id;
             Broker.Instance.Insert(p);
             return "Uspesno kreiran nalog.";
                 

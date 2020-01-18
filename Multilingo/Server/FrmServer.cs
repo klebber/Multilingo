@@ -20,6 +20,7 @@ namespace Server
             ObradaKomponenti();
             Kontroler.Instance.PrijavljenNov += K_PrijavljenNov;
             OsveziDGV();
+            dataGridView1.BackgroundColor = Color.WhiteSmoke;
         }
 
         private void btnSwitch_Click(object sender, EventArgs e)
@@ -87,6 +88,11 @@ namespace Server
         {
             Kontroler.Instance.PrijavljenNov -= K_PrijavljenNov;
             Kontroler.Instance.Zaustavi();
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            dataGridView1.ClearSelection();
         }
     }
 }

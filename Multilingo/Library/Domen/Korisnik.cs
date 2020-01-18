@@ -10,7 +10,7 @@ namespace Library.Domen
     [Serializable]
     public class Korisnik : IDomenskiObjekat
     {
-        public int ID { get; set; }
+        public int IDKorisnika { get; set; }
         public string KorisnickoIme { get; set; }
         public string Lozinka { get; set; }
         public string Ime { get; set; }
@@ -32,7 +32,7 @@ namespace Library.Domen
                 korisnik = new Administrator();
             else
                 korisnik = new Polaznik();
-            korisnik.ID = reader.GetInt32(0);
+            korisnik.IDKorisnika = reader.GetInt32(0);
             korisnik.KorisnickoIme = reader.GetString(1);
             korisnik.Lozinka = reader.GetString(2);
             korisnik.Ime = reader.GetString(3);

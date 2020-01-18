@@ -2,7 +2,9 @@
 using Library.Domen;
 using Library.Transfer;
 using Server.SistemskeOperacije.KorisnikSO;
+using Server.SistemskeOperacije.KursSO;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -69,7 +71,7 @@ namespace Server
                 {
                     case Operacija.LOGIN:
                         if (Korisnik.KorisnickoIme != "Gost")
-                            throw new SOException("");
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
                         Korisnik = (Korisnik) new LoginSO().IzvrsiSO(zahtev.Objekat);
                         odgovor.Poruka = "Korisnik uspesno ulogovan.";
                         odgovor.Objekat = Korisnik;
@@ -80,6 +82,9 @@ namespace Server
                         Kontroler.Instance.OnPrijavljen();
                         break;
                     case Operacija.VRATI_POLAZNIKE:
+                        if (Korisnik.KorisnickoIme == "Gost")
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Objekat = (List<Polaznik>)new VratiPolaznikeSO().IzvrsiSO(new Polaznik());
                         break;
                     case Operacija.NADJI_POLAZNIKE:
                         break;
@@ -90,6 +95,10 @@ namespace Server
                     case Operacija.OBRISI_POLAZNIKA:
                         break;
                     case Operacija.VRATI_KURSEVE:
+                        if (Korisnik.KorisnickoIme == "Gost")
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Objekat = (List<Kurs>) new VratiKurseveSO().IzvrsiSO(new Kurs());
+                        odgovor.Poruka = "Lista Kurseva";
                         break;
                     case Operacija.KREIRAJ_KURS:
                         break;
@@ -102,6 +111,9 @@ namespace Server
                     case Operacija.OBRISI_KURS:
                         break;
                      case Operacija.VRATI_TERMINE:
+                        //if (Korisnik.KorisnickoIme == "Gost")
+                        //    throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        //odgovor.Objekat = (List<Kurs>)new VratiKurseveSO().IzvrsiSO(new Kurs());
                         break;
                      case Operacija.NADJI_TERMINE:
                         break;
@@ -120,6 +132,9 @@ namespace Server
                             throw new SOException("Ne mozete izvrsiti ovu operaciju!");
                         break;
                      case Operacija.VRATI_PRACENJA_KURSEVA:
+                        if (Korisnik.KorisnickoIme == "Gost")
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        //odgovor.Objekat = (List<Kurs>)new VratiKurseveSO().IzvrsiSO(new Kurs());
                         break;
                      case Operacija.NADJI_PRACENJA_KURSEVA:
                         break;

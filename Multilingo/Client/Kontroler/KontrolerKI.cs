@@ -2,6 +2,7 @@
 using Library.Domen;
 using Library.Transfer;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Threading;
@@ -19,6 +20,19 @@ namespace Client
         public FrmPolaznik frmPolaznik;
         public FrmRegistracija frmRegistracija;
         public Thread obradaOdgovora;
+
+        public List<Kurs> kursevi;
+        public delegate void IzmenaKursevaHandler();
+        public event IzmenaKursevaHandler IzmenaKurseva;
+        public List<Polaznik> polaznici;
+        public delegate void IzmenaPolaznikaHandler();
+        public event IzmenaPolaznikaHandler IzmenaPolaznika;
+        public List<Termin> termini;
+        public delegate void IzmenaTerminaHandler();
+        public event IzmenaTerminaHandler IzmenaTermina;
+        public List<Pracenje> pracenja;
+        public delegate void IzmenaPracenjaHandler();
+        public event IzmenaPracenjaHandler IzmenaPracenja;
 
         private KontrolerKI()
         {
@@ -86,6 +100,11 @@ namespace Client
             {
                 Operacija = Operacija.LOGOUT
             });
+            CleanUp();
+        }
+
+        private void CleanUp()
+        {
             Sesija.Instance.Korisnik = null;
             kraj = false;
         }
@@ -122,6 +141,22 @@ namespace Client
                     return true;
             }
         }
+
+        public void VratiKurseve()
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.VRATI_KURSEVE
+            });
+        }
+
+        public void VratiPolaznike()
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.VRATI_POLAZNIKE
+            });
+        }
         
         private void Obrada()
         {
@@ -136,6 +171,22 @@ namespace Client
                         case Operacija.LOGOUT:
                             k = true;
                             break;
+                        case Operacija.VRATI_KURSEVE:
+                            kursevi = (List<Kurs>)o.Objekat;
+                            IzmenaKurseva?.Invoke();
+                            break;
+                        case Operacija.VRATI_POLAZNIKE:
+                            polaznici = (List<Polaznik>)o.Objekat;
+                            IzmenaPolaznika?.Invoke();
+                            break;
+                        case Operacija.VRATI_TERMINE:
+                            termini = (List<Termin>)o.Objekat;
+                            IzmenaTermina?.Invoke();
+                            break;
+                        case Operacija.VRATI_PRACENJA_KURSEVA:
+                            pracenja = (List<Pracenje>)o.Objekat;
+                            IzmenaPracenja?.Invoke();
+                            break;
                     }
                 }
             }
@@ -147,8 +198,7 @@ namespace Client
             catch (SerializationException)
             {
                 MessageBox.Show("Izgubljena konekcija sa serverom.");
-                Sesija.Instance.Korisnik = null;
-                kraj = false;
+                CleanUp();
                 DisposeForms();
             }
             

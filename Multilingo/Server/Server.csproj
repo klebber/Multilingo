@@ -61,7 +61,11 @@
     <Compile Include="Server.cs" />
     <Compile Include="SistemskeOperacije\KorisnikSO\KreirajNalogPolaznikaSO.cs" />
     <Compile Include="SistemskeOperacije\KorisnikSO\LoginSO.cs" />
+    <Compile Include="SistemskeOperacije\KorisnikSO\VratiPolaznikeSO.cs" />
+    <Compile Include="SistemskeOperacije\KursSO\VratiKurseveSO.cs" />
     <Compile Include="SistemskeOperacije\OpstaSistemskaOperacija.cs" />
+    <Compile Include="SistemskeOperacije\PracenjeSO\VratiPracenjaKursevaSO.cs" />
+    <Compile Include="SistemskeOperacije\TerminSO\VratiTermineSO.cs" />
     <EmbeddedResource Include="FrmServer.resx">
       <DependentUpon>FrmServer.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,10 +97,6 @@
       <Name>Library</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SistemskeOperacije\KursSO\" />
-    <Folder Include="SistemskeOperacije\PracenjeSO\" />
-    <Folder Include="SistemskeOperacije\TerminSO\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

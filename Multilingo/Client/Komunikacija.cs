@@ -81,6 +81,10 @@ namespace Client
                 klijentskiSocket.Close();
                 return null;
             }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
     }

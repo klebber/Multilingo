@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Library.Domen
 {
+    [Serializable]
     public class Termin : IDomenskiObjekat
     {
         public string Tabela => throw new NotImplementedException();
         public string Alias => throw new NotImplementedException();
-        public string VrednostiZaInsert => throw new NotImplementedException();
         public string InsertValues => throw new NotImplementedException();
         public string UpdateValues => throw new NotImplementedException();
         public string Join => throw new NotImplementedException();

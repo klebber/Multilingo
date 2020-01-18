@@ -7,24 +7,40 @@ using System.Threading.Tasks;
 
 namespace Library.Domen
 {
+    [Serializable]
     public class Kurs : IDomenskiObjekat
     {
-        public string Tabela => throw new NotImplementedException();
-        public string Alias => throw new NotImplementedException();
-        public string VrednostiZaInsert => throw new NotImplementedException();
-        public string InsertValues => throw new NotImplementedException();
+        public int IDKursa { get; set; }
+        public int BrojRaspolozivihMesta { get; set; }
+        public string Jezik { get; set; }
+        public string Nivo { get; set; }
+
+        public string Tabela => "Kurs";
+        public string Alias => "kurs";
+        public string InsertValues => $"{BrojRaspolozivihMesta}, '{Jezik}', '{Nivo}'";
         public string UpdateValues => throw new NotImplementedException();
-        public string Join => throw new NotImplementedException();
-        public string InsertedOutput => throw new NotImplementedException();
+        public string Join => "";
+        public string InsertedOutput => "output inserted.IDKursa";
 
         public List<IDomenskiObjekat> ListaObjekata(SqlDataReader reader)
         {
-            throw new NotImplementedException();
+            List<IDomenskiObjekat> lista = new List<IDomenskiObjekat>();
+            while (reader.Read())
+            {
+                lista.Add(new Kurs()
+                {
+                    IDKursa = reader.GetInt32(0),
+                    BrojRaspolozivihMesta = reader.GetInt32(1),
+                    Jezik = reader.GetString(2),
+                    Nivo = reader.GetString(3)
+                });
+            }
+            return lista;
         }
 
         public string Where(string criteria)
         {
-            throw new NotImplementedException();
+            return criteria != string.Empty ? $"where IDKursa={criteria}" : "";
         }
     }
 }

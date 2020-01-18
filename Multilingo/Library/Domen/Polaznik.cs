@@ -16,35 +16,34 @@ namespace Library.Domen
 
         public override string Tabela => "Polaznik";
         public override string Alias => "polaznik";
-        public override string InsertValues => $"{ID}, '{BrojTelefona}', {Godine}, '{Pol}'";
-        public override string UpdateValues => $"IDKorisnika = '{ID}', BrojTelefona = '{BrojTelefona}', Godine = {Godine}, Pol = '{Pol}'";
-        public override string Join => "";
+        public override string InsertValues => $"{IDKorisnika}, '{BrojTelefona}', {Godine}, '{Pol}'";
+        public override string UpdateValues => $"IDKorisnika = '{IDKorisnika}', BrojTelefona = '{BrojTelefona}', Godine = {Godine}, Pol = '{Pol}'";
+        public override string Join => "join Korisnik korisnik on (korisnik.IDKorisnika=polaznik.IDKorisnika)";
         public override string InsertedOutput => base.InsertedOutput;
 
         public override List<IDomenskiObjekat> ListaObjekata(SqlDataReader reader)
         {
-            //TODO redosled
-            reader.Read();
-            List<IDomenskiObjekat> lista = new List<IDomenskiObjekat>()
+            List<IDomenskiObjekat> lista = new List<IDomenskiObjekat>();
+            while(reader.Read())
             {
-                new Polaznik()
+                lista.Add(new Polaznik()
                 {
-                    ID = reader.GetInt32(0),
-                    KorisnickoIme = reader.GetString(1),
-                    Lozinka = reader.GetString(2),
-                    Ime = reader.GetString(3),
-                    Prezime = reader.GetString(4),
-                    Email = reader.GetString(5),
-                    BrojTelefona = reader.GetString(6),
-                    Godine = reader.GetInt32(7),
-                    Pol = reader.GetString(8)
-                }
-            };
+                    BrojTelefona = reader.GetString(1),
+                    Godine = reader.GetInt32(2),
+                    Pol = reader.GetString(3),
+                    IDKorisnika = reader.GetInt32(4),
+                    KorisnickoIme = reader.GetString(5),
+                    Lozinka = reader.GetString(6),
+                    Ime = reader.GetString(7),
+                    Prezime = reader.GetString(8),
+                    Email = reader.GetString(9)
+                });
+            }
             return lista;
         }
         public override string Where(string criteria)
         {
-            return $"where KorisnickoIme = '{KorisnickoIme}'";
+            return criteria != string.Empty ? $"where KorisnickoIme = '{KorisnickoIme}'" : "";
         }
     }
 }
