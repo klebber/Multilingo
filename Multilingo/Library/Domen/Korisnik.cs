@@ -17,22 +17,37 @@ namespace Library.Domen
         public string Prezime { get; set; }
         public string Email { get; set; }
 
-        public virtual string Tabela => "Gost";
-
-        public virtual string InsertValues => throw new NotImplementedException();
-
+        public virtual string Tabela => "Korisnik";
+        public virtual string Alias => "korisnik";
+        public virtual string InsertValues => $"'{KorisnickoIme}', '{Lozinka}', '{Ime}', '{Prezime}', '{Email}'";
         public virtual string UpdateValues => throw new NotImplementedException();
-
-        public virtual string Join => throw new NotImplementedException();
+        public virtual string Join => "left join Administrator administrator on (korisnik.IDKorisnika=administrator.IDKorisnika)";
+        public virtual string InsertedOutput => "output inserted.IDKorisnika";
 
         public virtual List<IDomenskiObjekat> ListaObjekata(SqlDataReader reader)
         {
-            throw new NotImplementedException();
+            reader.Read();
+            Korisnik korisnik;
+            if (!DBNull.Value.Equals(reader["PozicijaZaposlenog"]))
+                korisnik = new Administrator();
+            else
+                korisnik = new Polaznik();
+            korisnik.ID = reader.GetInt32(0);
+            korisnik.KorisnickoIme = reader.GetString(1);
+            korisnik.Lozinka = reader.GetString(2);
+            korisnik.Ime = reader.GetString(3);
+            korisnik.Prezime = reader.GetString(4);
+            korisnik.Email = reader.GetString(5);
+            List<IDomenskiObjekat> lista = new List<IDomenskiObjekat>()
+            {
+                korisnik
+            };
+            return lista;
         }
 
         public virtual string Where(string criteria)
         {
-            throw new NotImplementedException();
+            return $"where KorisnickoIme = '{KorisnickoIme}'";
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Domen
 {
@@ -14,13 +11,15 @@ namespace Library.Domen
         public string StepenStrucneSpreme { get; set; }
 
         public override string Tabela => "Administrator";
-        public override string InsertValues => $"'{KorisnickoIme}', '{Lozinka}', '{Ime}', '{Prezime}', '{Email}', '{PozicijaZaposlenog}', '{StepenStrucneSpreme}'";
-        public override string UpdateValues => $"KorisnickoIme = '{KorisnickoIme}', Lozinka = '{Lozinka}', Ime = '{Ime}', Prezime = '{Prezime}'," +
-            $" Email = '{Email}', PozicijaZaposlenog = '{PozicijaZaposlenog}', StepenStrucneSpreme = '{StepenStrucneSpreme}'";
+        public override string Alias => "administrator";
+        public override string InsertValues => $"{ID}, '{PozicijaZaposlenog}', '{StepenStrucneSpreme}'";
+        public override string UpdateValues => $"IDKorisnika = '{ID}', PozicijaZaposlenog = '{PozicijaZaposlenog}', StepenStrucneSpreme = '{StepenStrucneSpreme}'";
         public override string Join => "";
+        public override string InsertedOutput => base.InsertedOutput;
 
         public override List<IDomenskiObjekat> ListaObjekata(SqlDataReader reader)
         {
+            //TODO redosled
             reader.Read();
             List<IDomenskiObjekat> lista = new List<IDomenskiObjekat>()
             {

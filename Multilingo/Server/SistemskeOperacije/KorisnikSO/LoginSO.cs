@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Library;
 using Library.Domen;
 
@@ -15,7 +12,6 @@ namespace Server.SistemskeOperacije.KorisnikSO
         {
            if (Kontroler.Instance.korisnici.Any(k => k.Korisnik.KorisnickoIme == ((Korisnik)objekat).KorisnickoIme))
            {
-
                 Debug.WriteLine($"Korisnik je vec prijavljen: {((Korisnik)objekat).KorisnickoIme}");
                 throw new SOException("Korisnik je vec prijavljen!");
            }
@@ -25,15 +21,9 @@ namespace Server.SistemskeOperacije.KorisnikSO
         {
             Korisnik k = (Korisnik)objekat;
             List<IDomenskiObjekat> lista;
-            if ((lista = Broker.Instance.Select(new Administrator() { KorisnickoIme = k.KorisnickoIme })) != null)
+            if ((lista = Broker.Instance.Select(new Korisnik() { KorisnickoIme = k.KorisnickoIme })) != null)
             {
                 if(((Korisnik)lista[0]).Lozinka == k.Lozinka)
-                    return lista[0];
-                throw new SOException("Pogresna lozinka!");
-            }
-            else if ((lista = Broker.Instance.Select(new Polaznik() { KorisnickoIme = k.KorisnickoIme })) != null)
-            {
-                if (((Korisnik)lista[0]).Lozinka == k.Lozinka)
                     return lista[0];
                 throw new SOException("Pogresna lozinka!");
             }

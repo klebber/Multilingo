@@ -71,7 +71,7 @@ namespace Server
             {
                 k.IP,
                 k.Korisnik.KorisnickoIme,
-                Uloga = k.Korisnik.Tabela
+                Uloga = k.Korisnik.GetType().Name != "Korisnik" ? k.Korisnik.GetType().Name : "Gost"
             }).ToList();
             dataGridView1.Columns[0].Width = 125;
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;

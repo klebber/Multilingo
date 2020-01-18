@@ -15,14 +15,15 @@ namespace Library.Domen
         public string Pol { get; set; }
 
         public override string Tabela => "Polaznik";
-
-        public override string InsertValues => $"'{KorisnickoIme}', '{Lozinka}', '{Ime}', '{Prezime}', '{Email}', '{BrojTelefona}', {Godine}, '{Pol}'";
-        public override string UpdateValues => $"KorisnickoIme = '{KorisnickoIme}', Lozinka = '{Lozinka}', Ime = '{Ime}', Prezime = '{Prezime}'," +
-            $" Email = '{Email}', BrojTelefona = '{BrojTelefona}', Godine = {Godine}, Pol = '{Pol}'";
+        public override string Alias => "polaznik";
+        public override string InsertValues => $"{ID}, '{BrojTelefona}', {Godine}, '{Pol}'";
+        public override string UpdateValues => $"IDKorisnika = '{ID}', BrojTelefona = '{BrojTelefona}', Godine = {Godine}, Pol = '{Pol}'";
         public override string Join => "";
+        public override string InsertedOutput => base.InsertedOutput;
 
         public override List<IDomenskiObjekat> ListaObjekata(SqlDataReader reader)
         {
+            //TODO redosled
             reader.Read();
             List<IDomenskiObjekat> lista = new List<IDomenskiObjekat>()
             {

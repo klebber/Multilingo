@@ -54,8 +54,9 @@ namespace Server
 
         public List<IDomenskiObjekat> Select(IDomenskiObjekat objekat, string uslov = "")
         {
-            using (SqlCommand command = new SqlCommand($"select * from {objekat.Tabela} {objekat.Join} {objekat.Where(uslov)}", connection, transaction))
+            using (SqlCommand command = new SqlCommand($"select * from {objekat.Tabela} {objekat.Alias} {objekat.Join} {objekat.Where(uslov)}", connection, transaction))
             {
+                    Debug.WriteLine(command.CommandText);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     return reader.HasRows ? objekat.ListaObjekata(reader) : null;
@@ -67,16 +68,17 @@ namespace Server
         {
             using (SqlCommand command = new SqlCommand($"update {objekat.Tabela} set {objekat.UpdateValues} {objekat.Where(uslov)}", connection, transaction))
             {
+                Debug.WriteLine(command.CommandText);
                 return command.ExecuteNonQuery();
             }
         }
 
-        public int Insert(IDomenskiObjekat objekat)
+        public object Insert(IDomenskiObjekat objekat)
         {
-            using (SqlCommand command = new SqlCommand($"insert into {objekat.Tabela} values ({objekat.InsertValues})", connection, transaction))
+            using (SqlCommand command = new SqlCommand($"insert into {objekat.Tabela} {objekat.InsertedOutput} values ({objekat.InsertValues})", connection, transaction))
             {
                 Debug.WriteLine(command.CommandText);
-                return command.ExecuteNonQuery();
+                return command.ExecuteScalar();
             }
         }
 
@@ -84,6 +86,7 @@ namespace Server
         {
             using (SqlCommand command = new SqlCommand($"delete from {objekat.Tabela} where ({objekat.Where(uslov)})", connection, transaction))
             {
+                Debug.WriteLine(command.CommandText);
                 return command.ExecuteNonQuery();
             }
         }
