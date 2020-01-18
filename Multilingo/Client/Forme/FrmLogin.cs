@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Client.Forme;
@@ -31,6 +33,7 @@ namespace Client
 
         private void btnPrijava_Click(object sender, EventArgs e)
         {
+            if (!Validacija()) return;
             if (!KontrolerKI.Instance.Login(txtUser.Text, txtPass.Text, out string poruka))
             {
                 Connect();
@@ -44,6 +47,22 @@ namespace Client
                 else
                     (KontrolerKI.Instance.frmPolaznik = new Forme.FrmPolaznik()).ShowDialog();
             }
+        }
+
+        private bool Validacija()
+        {
+            bool rez = true;
+            if(txtUser.Text == string.Empty || txtUser.Text.Any(c => !char.IsLetterOrDigit(c)))
+            {
+                txtUser.BackColor = Color.LightCoral;
+                rez = false;
+            }
+            if (txtPass.Text == string.Empty)
+            {
+                txtPass.BackColor = Color.LightCoral;
+                rez = false;
+            }
+            return rez;
         }
 
         private void btnRegistracija_Click(object sender, EventArgs e)
@@ -78,6 +97,16 @@ namespace Client
         private void btnConnect_Click(object sender, EventArgs e)
         {
             if (!Connect()) MessageBox.Show("Server nije dostupan");
+        }
+
+        private void txtUser_TextChanged(object sender, EventArgs e)
+        {
+            txtUser.BackColor = Color.White;
+        }
+
+        private void txtPass_TextChanged(object sender, EventArgs e)
+        {
+            txtPass.BackColor = Color.White;
         }
     }
 }
