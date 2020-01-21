@@ -10,6 +10,8 @@ namespace Server.SistemskeOperacije
 {
     public abstract class OpstaSistemskaOperacija
     {
+        protected abstract void Validacija(object objekat);
+
         public object IzvrsiSO(object objekat)
         {
             try
@@ -31,8 +33,6 @@ namespace Server.SistemskeOperacije
                 Broker.Instance.ZatvoriKonekciju();
             }
         }
-
-        protected abstract void Validacija(object objekat);
 
         protected abstract object IzvrsiKonkretnuOperaciju(object objekat);
     }

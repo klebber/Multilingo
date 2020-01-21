@@ -17,7 +17,7 @@ namespace Library.Domen
         public override string Tabela => "Polaznik";
         public override string Alias => "polaznik";
         public override string InsertValues => $"{IDKorisnika}, '{BrojTelefona}', {Godine}, '{Pol}'";
-        public override string UpdateValues => $"IDKorisnika = '{IDKorisnika}', BrojTelefona = '{BrojTelefona}', Godine = {Godine}, Pol = '{Pol}'";
+        public override string UpdateValues => $"BrojTelefona = '{BrojTelefona}', Godine = {Godine}, Pol = '{Pol}'";
         public override string Join => "join Korisnik korisnik on (korisnik.IDKorisnika=polaznik.IDKorisnika)";
         public override string InsertedOutput => base.InsertedOutput;
 
@@ -43,7 +43,9 @@ namespace Library.Domen
         }
         public override string Where(string criteria)
         {
-            return criteria != string.Empty ? $"where KorisnickoIme = '{KorisnickoIme}'" : "";
+            return criteria == string.Empty ? "" :
+                (int.TryParse(criteria, out int _) ? $"where IDKorisnika = {criteria}" :
+                $"where upper(KorisnickoIme) like upper('{criteria}%')");
         }
     }
 }

@@ -47,7 +47,10 @@ namespace Library.Domen
 
         public virtual string Where(string criteria)
         {
-            return $"where KorisnickoIme = '{KorisnickoIme}'";
+            if (KorisnickoIme != null && KorisnickoIme != string.Empty) return $"where KorisnickoIme = '{KorisnickoIme}'";
+            return criteria == string.Empty ? "" :
+                (int.TryParse(criteria, out int _) ? $"where IDKorisnika = {criteria}" :
+                $"where upper(KorisnickoIme) like upper('{criteria}%')");
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Server.SistemskeOperacije.KorisnikSO
         protected override void Validacija(object objekat)
         {
             Korisnik k = objekat as Polaznik;
-            if (Broker.Instance.Select(new Korisnik() { KorisnickoIme = k.KorisnickoIme }) != null)
+            if (Broker.Instance.Select(new Korisnik(), k.KorisnickoIme) != null)
             {
                 throw new SOException("Ovo korisnicko ime je zauzeto!");
             }

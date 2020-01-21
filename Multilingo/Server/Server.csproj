@@ -59,12 +59,22 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="SistemskeOperacije\KorisnikSO\AzurirajPolaznikaSO.cs" />
     <Compile Include="SistemskeOperacije\KorisnikSO\KreirajNalogPolaznikaSO.cs" />
     <Compile Include="SistemskeOperacije\KorisnikSO\LoginSO.cs" />
+    <Compile Include="SistemskeOperacije\KorisnikSO\NadjiPolaznikeSO.cs" />
+    <Compile Include="SistemskeOperacije\KorisnikSO\ObrisiPolaznikaSO.cs" />
     <Compile Include="SistemskeOperacije\KorisnikSO\VratiPolaznikeSO.cs" />
+    <Compile Include="SistemskeOperacije\KursSO\AzurirajKursSO.cs" />
+    <Compile Include="SistemskeOperacije\KursSO\KreirajKursSO.cs" />
+    <Compile Include="SistemskeOperacije\KursSO\NadjiKurseveSO.cs" />
+    <Compile Include="SistemskeOperacije\KursSO\ObrisiKursSO.cs" />
     <Compile Include="SistemskeOperacije\KursSO\VratiKurseveSO.cs" />
     <Compile Include="SistemskeOperacije\OpstaSistemskaOperacija.cs" />
+    <Compile Include="SistemskeOperacije\PracenjeSO\NadjiPracenjaKursevaSO.cs" />
     <Compile Include="SistemskeOperacije\PracenjeSO\VratiPracenjaKursevaSO.cs" />
+    <Compile Include="SistemskeOperacije\TerminSO\AzurirajTerminSO.cs" />
+    <Compile Include="SistemskeOperacije\TerminSO\NadjiTermineSO.cs" />
     <Compile Include="SistemskeOperacije\TerminSO\VratiTermineSO.cs" />
     <EmbeddedResource Include="FrmServer.resx">
       <DependentUpon>FrmServer.cs</DependentUpon>

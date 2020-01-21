@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLogin));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnRegistracija = new System.Windows.Forms.Button();
@@ -38,14 +39,14 @@
             this.btnPrijava = new System.Windows.Forms.Button();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.txtUser = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.btnConnect);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.label2);
@@ -53,11 +54,21 @@
             this.panel1.Controls.Add(this.btnPrijava);
             this.panel1.Controls.Add(this.txtPass);
             this.panel1.Controls.Add(this.txtUser);
-            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(13, 13);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(521, 659);
             this.panel1.TabIndex = 0;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.ErrorImage = global::Client.Properties.Resources.logo;
+            this.pictureBox2.Image = global::Client.Properties.Resources.logo;
+            this.pictureBox2.Location = new System.Drawing.Point(100, 26);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(324, 298);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
             // 
             // btnConnect
             // 
@@ -138,16 +149,6 @@
             this.txtUser.TabIndex = 1;
             this.txtUser.TextChanged += new System.EventHandler(this.txtUser_TextChanged);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Client.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(100, 23);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(324, 298);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // FrmLogin
             // 
             this.AcceptButton = this.btnPrijava;
@@ -162,8 +163,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Login_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -171,7 +172,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnPrijava;
@@ -180,6 +180,7 @@
         private System.Windows.Forms.Button btnRegistracija;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

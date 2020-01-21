@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Library.Domen;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +12,13 @@ namespace Server.SistemskeOperacije.TerminSO
     {
         protected override void Validacija(object objekat)
         {
-            throw new NotImplementedException();
+
         }
 
         protected override object IzvrsiKonkretnuOperaciju(object objekat)
         {
-            throw new NotImplementedException();
+            object ob = Broker.Instance.Select((Termin)objekat);
+            return ob == null ? new List<Termin>() : ((List<IDomenskiObjekat>)ob).ConvertAll(o => (Termin)o);
         }
     }
 }

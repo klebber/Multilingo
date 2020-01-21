@@ -11,6 +11,7 @@ namespace Library.Transfer
     {
         public Operacija Operacija { get; set; }
         public object Objekat { get; set; }
+        public object KriterijumPretrage { get; set; }
 
     }
 }

@@ -16,8 +16,8 @@ namespace Server.SistemskeOperacije.KursSO
 
         protected override object IzvrsiKonkretnuOperaciju(object objekat)
         {
-            object ob = Broker.Instance.Select((Kurs)objekat).ConvertAll(o => (Kurs)o);
-            return ob ?? new List<Kurs>();
+            object ob = Broker.Instance.Select((Kurs)objekat);
+            return ob == null ? new List<Kurs>() : ((List<IDomenskiObjekat>)ob).ConvertAll(o => (Kurs)o);
         }
     }
 }

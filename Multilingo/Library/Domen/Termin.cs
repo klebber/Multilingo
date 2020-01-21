@@ -10,20 +10,38 @@ namespace Library.Domen
     [Serializable]
     public class Termin : IDomenskiObjekat
     {
-        public string Tabela => throw new NotImplementedException();
-        public string Alias => throw new NotImplementedException();
-        public string InsertValues => throw new NotImplementedException();
-        public string UpdateValues => throw new NotImplementedException();
-        public string Join => throw new NotImplementedException();
-        public string InsertedOutput => throw new NotImplementedException();
+        public int IDKursa { get; set; }
+        public int IDTermina { get; set; }
+        public string Vreme { get; set; }
+        public DateTime Datum { get; set; }
+        public int IDPredavaca { get; set; }
+
+        public string Tabela => "Terminn"; //TODO obrisi jedno n
+        public string Alias => "terminn";
+        public string InsertValues => $"{IDKursa}, '{Vreme}', '{Datum.ToString("yyyy-MM-dd")}', {IDPredavaca}";
+        public string UpdateValues => $"Vreme = '{Vreme}'";
+        public string Join => "";
+        public string InsertedOutput => "";
         public List<IDomenskiObjekat> ListaObjekata(SqlDataReader reader)
         {
-            throw new NotImplementedException();
+            List<IDomenskiObjekat> lista = new List<IDomenskiObjekat>();
+            while (reader.Read())
+            {
+                lista.Add(new Termin()
+                {
+                    IDKursa = reader.GetInt32(0),
+                    IDTermina = reader.GetInt32(1),
+                    Vreme = reader.GetString(2),
+                    Datum = reader.GetDateTime(3),
+                    IDPredavaca = reader.GetInt32(4)
+                });
+            }
+            return lista;
         }
 
         public string Where(string criteria)
         {
-            throw new NotImplementedException();
+            return criteria != string.Empty ? $"where {criteria}" : "";
         }
     }
 }

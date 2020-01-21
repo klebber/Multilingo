@@ -56,7 +56,7 @@ namespace Server
         {
             using (SqlCommand command = new SqlCommand($"select * from {objekat.Tabela} {objekat.Alias} {objekat.Join} {objekat.Where(uslov)}", connection, transaction))
             {
-                    Debug.WriteLine(command.CommandText);
+                Debug.WriteLine(command.CommandText);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     return reader.HasRows ? objekat.ListaObjekata(reader) : null;
@@ -84,7 +84,7 @@ namespace Server
 
         public int Delete(IDomenskiObjekat objekat, string uslov = "")
         {
-            using (SqlCommand command = new SqlCommand($"delete from {objekat.Tabela} where ({objekat.Where(uslov)})", connection, transaction))
+            using (SqlCommand command = new SqlCommand($"delete from {objekat.Tabela} {objekat.Where(uslov)}", connection, transaction))
             {
                 Debug.WriteLine(command.CommandText);
                 return command.ExecuteNonQuery();

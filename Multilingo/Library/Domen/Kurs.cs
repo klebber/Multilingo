@@ -18,8 +18,8 @@ namespace Library.Domen
         public string Tabela => "Kurs";
         public string Alias => "kurs";
         public string InsertValues => $"{BrojRaspolozivihMesta}, '{Jezik}', '{Nivo}'";
-        public string UpdateValues => throw new NotImplementedException();
-        public string Join => "";
+        public string UpdateValues => $"BrojRaspolozivihMesta = {BrojRaspolozivihMesta}, Jezik = '{Jezik}', Nivo = '{Nivo}'";
+        public string Join => "left join Pracenje pracenje on pracenje.IDKursa=kurs.IDKursa";
         public string InsertedOutput => "output inserted.IDKursa";
 
         public List<IDomenskiObjekat> ListaObjekata(SqlDataReader reader)
@@ -40,7 +40,10 @@ namespace Library.Domen
 
         public string Where(string criteria)
         {
-            return criteria != string.Empty ? $"where IDKursa={criteria}" : "";
+            return criteria == string.Empty ? "" : 
+                (BrojRaspolozivihMesta == -1 ? $"where pracenje.IDKorisnika = {criteria}" :
+                (int.TryParse(criteria, out int _) ? $"where IDKursa = {criteria}" :
+                $"where upper(Jezik) like upper('{criteria}%')"));
         }
     }
 }

@@ -48,7 +48,6 @@ namespace Client
         
         internal bool PosaljiZahtev(Zahtev zahtev)
         {
-            Korisnik kor = (Korisnik)zahtev.Objekat;
             try
             {
                 formatter.Serialize(stream, zahtev);

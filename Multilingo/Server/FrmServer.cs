@@ -81,7 +81,7 @@ namespace Server
 
         private void K_PrijavljenNov()
         {
-            Invoke(new Action(() => { OsveziDGV(); }));
+            if(Created) Invoke(new Action(() => { OsveziDGV(); }));
         }
 
         private void FrmServer_FormClosing(object sender, FormClosingEventArgs e)

@@ -8,7 +8,7 @@ namespace Library.Transfer
 {
     public enum Signal
     {
-        OK,
-        ERROR
+        Ok,
+        Error
     }
 }

@@ -3,6 +3,8 @@ using Library.Domen;
 using Library.Transfer;
 using Server.SistemskeOperacije.KorisnikSO;
 using Server.SistemskeOperacije.KursSO;
+using Server.SistemskeOperacije.PracenjeSO;
+using Server.SistemskeOperacije.TerminSO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -69,7 +71,7 @@ namespace Server
             {
                 switch (zahtev.Operacija)
                 {
-                    case Operacija.LOGIN:
+                    case Operacija.Login:
                         if (Korisnik.KorisnickoIme != "Gost")
                             throw new SOException("Ne mozete izvrsiti ovu operaciju!");
                         Korisnik = (Korisnik) new LoginSO().IzvrsiSO(zahtev.Objekat);
@@ -77,75 +79,105 @@ namespace Server
                         odgovor.Objekat = Korisnik;
                         Kontroler.Instance.OnPrijavljen();
                         break;
-                    case Operacija.LOGOUT:
+                    case Operacija.Logout:
                         Korisnik = new Korisnik() { KorisnickoIme = "Gost" };
                         Kontroler.Instance.OnPrijavljen();
                         break;
-                    case Operacija.VRATI_POLAZNIKE:
-                        if (Korisnik.KorisnickoIme == "Gost")
+                    case Operacija.VratiPolaznike:
+                        if (!(Korisnik is Administrator))
                             throw new SOException("Ne mozete izvrsiti ovu operaciju!");
                         odgovor.Objekat = (List<Polaznik>)new VratiPolaznikeSO().IzvrsiSO(new Polaznik());
+                        odgovor.Poruka = "Lista Polaznika";
                         break;
-                    case Operacija.NADJI_POLAZNIKE:
+                    case Operacija.NadjiPolaznike:
+                        if (!(Korisnik is Administrator))
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Objekat = (List<Polaznik>)new NadjiPolaznikeSO().IzvrsiSO(zahtev.KriterijumPretrage);
+                        odgovor.Poruka = "Lista Polaznika";
                         break;
-                    case Operacija.VRATI_POLAZNIKA:
+                    case Operacija.AzurirajPolaznika:
+                        if (!(Korisnik is Administrator))
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Poruka = (string)new AzurirajPolaznikaSO().IzvrsiSO(zahtev.Objekat);
                         break;
-                    case Operacija.AZURIRAJ_POLAZNIKA:
+                    case Operacija.ObrisiPolaznika:
+                        if (!(Korisnik is Administrator))
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Poruka = (string)new ObrisiPolaznikaSO().IzvrsiSO(zahtev.Objekat);
                         break;
-                    case Operacija.OBRISI_POLAZNIKA:
-                        break;
-                    case Operacija.VRATI_KURSEVE:
+                    case Operacija.VratiKurseve:
                         if (Korisnik.KorisnickoIme == "Gost")
                             throw new SOException("Ne mozete izvrsiti ovu operaciju!");
                         odgovor.Objekat = (List<Kurs>) new VratiKurseveSO().IzvrsiSO(new Kurs());
                         odgovor.Poruka = "Lista Kurseva";
                         break;
-                    case Operacija.KREIRAJ_KURS:
+                    case Operacija.KreirajKurs:
+                        if (!(Korisnik is Administrator))
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Poruka = (string)new KreirajKursSO().IzvrsiSO(zahtev.Objekat);
                         break;
-                    case Operacija.NADJI_KURSEVE:
+                    case Operacija.NadjiKurseve:
+                        if (Korisnik.KorisnickoIme == "Gost")
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Objekat = (List<Kurs>)new NadjiKurseveSO().IzvrsiSO(zahtev.KriterijumPretrage);
+                        odgovor.Poruka = "Lista Kurseva";
                         break;
-                    case Operacija.VRATI_KURS:
+                    case Operacija.AzurirajKurs:
+                        if (!(Korisnik is Administrator))
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Poruka = (string)new AzurirajKursSO().IzvrsiSO(zahtev.Objekat);
                         break;
-                    case Operacija.AZURIRAJ_KURS:
+                    case Operacija.ObrisiKurs:
+                        if (!(Korisnik is Administrator))
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Poruka = (string)new ObrisiKursSO().IzvrsiSO(zahtev.Objekat);
                         break;
-                    case Operacija.OBRISI_KURS:
+                     case Operacija.VratiTermine:
+                        if (Korisnik.KorisnickoIme == "Gost")
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Objekat = (List<Termin>)new VratiTermineSO().IzvrsiSO(new Termin());
+                        odgovor.Poruka = "Lista Termina";
                         break;
-                     case Operacija.VRATI_TERMINE:
-                        //if (Korisnik.KorisnickoIme == "Gost")
-                        //    throw new SOException("Ne mozete izvrsiti ovu operaciju!");
-                        //odgovor.Objekat = (List<Kurs>)new VratiKurseveSO().IzvrsiSO(new Kurs());
+                     case Operacija.NadjiTermine:
+                        if (Korisnik.KorisnickoIme == "Gost")
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Objekat = (List<Termin>)new NadjiTermineSO().IzvrsiSO(zahtev.KriterijumPretrage);
+                        odgovor.Poruka = "Lista Termina";
                         break;
-                     case Operacija.NADJI_TERMINE:
+                     case Operacija.AzurirajTermin:
+                        if (!(Korisnik is Administrator))
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Objekat = new AzurirajTerminSO().IzvrsiSO(zahtev.Objekat);
+                        odgovor.Poruka = "Termin azuriran";
                         break;
-                     case Operacija.VRATI_TERMIN:
-                        break;
-                     case Operacija.AZURIRAJ_TERMIN:
-                        break;
-                     case Operacija.KREIRAJ_NALOG_POLAZNIKA:
+                     case Operacija.KreirajNalogPolaznika:
                         if(Korisnik != null && Korisnik.KorisnickoIme != "Gost")
                             throw new SOException("Nije moguce kreirati nalog u ovom trenutku!");
                         odgovor.Poruka = (string) new KreirajNalogPolaznikaSO().IzvrsiSO(zahtev.Objekat);
                         odgovor.Objekat = zahtev.Objekat;
                         break;
-                     case Operacija.ODABERI_KURSEVE:
-                        if (Korisnik == null || Korisnik is Administrator)
-                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                     case Operacija.OdaberiKurseve:
                         break;
-                     case Operacija.VRATI_PRACENJA_KURSEVA:
+                     case Operacija.VratiPracenjaKurseva:
+                        if (!(Korisnik is Administrator))
+                            throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+                        odgovor.Objekat = (List<Pracenje>)new VratiPracenjaKursevaSO().IzvrsiSO(new Pracenje());
+                        odgovor.Poruka = "Lista pracenja";
+                        break;
+                     case Operacija.NadjiPracenjaKurseva:
                         if (Korisnik.KorisnickoIme == "Gost")
                             throw new SOException("Ne mozete izvrsiti ovu operaciju!");
-                        //odgovor.Objekat = (List<Kurs>)new VratiKurseveSO().IzvrsiSO(new Kurs());
-                        break;
-                     case Operacija.NADJI_PRACENJA_KURSEVA:
+                        odgovor.Objekat = (List<Pracenje>)new NadjiPracenjaKursevaSO().IzvrsiSO(zahtev.KriterijumPretrage);
+                        odgovor.Poruka = "Lista pracenja";
                         break;
                 }
                 odgovor.Operacija = zahtev.Operacija;
-                odgovor.Signal = Signal.OK;
+                odgovor.Signal = Signal.Ok;
                 return odgovor;
             }
             catch (SOException e)
             {
-                odgovor.Signal = Signal.ERROR;
+                odgovor.Signal = Signal.Error;
                 odgovor.Poruka = e.Message;
                 return odgovor;
             }

@@ -66,7 +66,7 @@ namespace Client
         {
             if (!Komunikacija.Instance.PosaljiZahtev(new Zahtev()
             {
-                Operacija = Operacija.LOGIN,
+                Operacija = Operacija.Login,
                 Objekat = new Korisnik()
                 {
                     KorisnickoIme = user,
@@ -81,7 +81,7 @@ namespace Client
             {
                 Odgovor o = Komunikacija.Instance.PrihvatiOdgovor();
                 poruka = o.Poruka;
-                if (o.Signal == Signal.ERROR)
+                if (o.Signal == Signal.Error)
                     return false;
                 else
                 {
@@ -98,7 +98,7 @@ namespace Client
         {
             Komunikacija.Instance.PosaljiZahtev(new Zahtev()
             {
-                Operacija = Operacija.LOGOUT
+                Operacija = Operacija.Logout
             });
             CleanUp();
         }
@@ -114,7 +114,7 @@ namespace Client
         {
             if(!Komunikacija.Instance.PosaljiZahtev(new Zahtev()
             {
-                Operacija = Operacija.KREIRAJ_NALOG_POLAZNIKA,
+                Operacija = Operacija.KreirajNalogPolaznika,
                 Objekat = new Polaznik()
                 {
                     KorisnickoIme = user,
@@ -135,18 +135,55 @@ namespace Client
             {
                 Odgovor o = Komunikacija.Instance.PrihvatiOdgovor();
                 poruka = o.Poruka;
-                if (o.Signal == Signal.ERROR)
+                if (o.Signal == Signal.Error)
                     return false;
                 else
                     return true;
             }
         }
 
+
         public void VratiKurseve()
         {
             Komunikacija.Instance.PosaljiZahtev(new Zahtev()
             {
-                Operacija = Operacija.VRATI_KURSEVE
+                Operacija = Operacija.VratiKurseve
+            });
+        }
+
+        public void NadjiKurseve(string kriterijumPretrage)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.NadjiKurseve,
+                KriterijumPretrage = kriterijumPretrage
+            });
+        }
+
+        public void KreirajKurs(List<IDomenskiObjekat> lista)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.KreirajKurs,
+                Objekat = lista
+            });
+        }
+
+        public void AzurirajKurs(Kurs kurs)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.AzurirajKurs,
+                Objekat = kurs
+            });
+        }
+
+        public void ObrisiKurs(Kurs kurs)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.ObrisiKurs,
+                Objekat = kurs
             });
         }
 
@@ -154,10 +191,80 @@ namespace Client
         {
             Komunikacija.Instance.PosaljiZahtev(new Zahtev()
             {
-                Operacija = Operacija.VRATI_POLAZNIKE
+                Operacija = Operacija.VratiPolaznike
             });
         }
-        
+
+        public void NadjiPolaznike(string kriterijumPretrage)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.NadjiPolaznike,
+                KriterijumPretrage = kriterijumPretrage
+            });
+        }
+
+        public void AzurirajPolaznika(Polaznik polaznik)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.AzurirajPolaznika,
+                Objekat = polaznik
+            });
+        }
+
+        public void ObrisiPolaznika(Polaznik polaznik)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.ObrisiPolaznika,
+                Objekat = polaznik
+            });
+        }
+
+        public void VratiTermine()
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.VratiTermine
+            });
+        }
+
+        public void NadjiTermine(string kriterijumPretrage)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.NadjiTermine,
+                KriterijumPretrage = kriterijumPretrage
+            });
+        }
+
+        public void AzurirajTermin(Termin termin)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.AzurirajTermin,
+                Objekat = termin
+            });
+        }
+
+        public void VratiPracenja()
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.VratiPracenjaKurseva
+            });
+        }
+
+        public void NadjiPracenja(IDomenskiObjekat kriterijumPretrage)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.NadjiPracenjaKurseva,
+                KriterijumPretrage = kriterijumPretrage
+            });
+        }
+
         private void Obrada()
         {
             bool k = false;
@@ -166,24 +273,63 @@ namespace Client
                 while (!k)
                 {
                     Odgovor o = Komunikacija.Instance.PrihvatiOdgovor();
+                    if(o.Signal == Signal.Error)
+                    {
+                        MessageBox.Show(o.Poruka);
+                        continue;
+                    }
                     switch (o.Operacija)
                     {
-                        case Operacija.LOGOUT:
+                        case Operacija.Logout:
                             k = true;
                             break;
-                        case Operacija.VRATI_KURSEVE:
+                        case Operacija.VratiKurseve:
                             kursevi = (List<Kurs>)o.Objekat;
                             IzmenaKurseva?.Invoke();
                             break;
-                        case Operacija.VRATI_POLAZNIKE:
+                        case Operacija.NadjiKurseve:
+                            kursevi = (List<Kurs>)o.Objekat;
+                            IzmenaKurseva?.Invoke();
+                            break;
+                        case Operacija.KreirajKurs:
+                            MessageBox.Show(o.Poruka);
+                            break;
+                        case Operacija.AzurirajKurs:
+                            MessageBox.Show(o.Poruka);
+                            break;
+                        case Operacija.ObrisiKurs:
+                            frmAdmin.UspesnoBrisanjeKursa(o.Poruka);
+                            break;
+                        case Operacija.VratiPolaznike:
                             polaznici = (List<Polaznik>)o.Objekat;
                             IzmenaPolaznika?.Invoke();
                             break;
-                        case Operacija.VRATI_TERMINE:
+                        case Operacija.NadjiPolaznike:
+                            polaznici = (List<Polaznik>)o.Objekat;
+                            IzmenaPolaznika?.Invoke();
+                            break;
+                        case Operacija.AzurirajPolaznika:
+                            MessageBox.Show(o.Poruka);
+                            break;
+                        case Operacija.ObrisiPolaznika:
+                            frmAdmin.UspesnoBrisanjePolaznika(o.Poruka);
+                            break;
+                        case Operacija.VratiTermine:
                             termini = (List<Termin>)o.Objekat;
                             IzmenaTermina?.Invoke();
                             break;
-                        case Operacija.VRATI_PRACENJA_KURSEVA:
+                        case Operacija.NadjiTermine:
+                            termini = (List<Termin>)o.Objekat;
+                            IzmenaTermina?.Invoke();
+                            break;
+                        case Operacija.AzurirajTermin:
+                            frmAdmin.UspesnoAzuriranjeTermina();
+                            break;
+                        case Operacija.VratiPracenjaKurseva:
+                            pracenja = (List<Pracenje>)o.Objekat;
+                            IzmenaPracenja?.Invoke();
+                            break;
+                        case Operacija.NadjiPracenjaKurseva:
                             pracenja = (List<Pracenje>)o.Objekat;
                             IzmenaPracenja?.Invoke();
                             break;
