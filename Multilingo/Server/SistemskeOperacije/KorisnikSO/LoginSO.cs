@@ -8,13 +8,19 @@ namespace Server.SistemskeOperacije.KorisnikSO
 {
     public class LoginSO : OpstaSistemskaOperacija
     {
+        public LoginSO(Korisnik korisnik) : base(korisnik)
+        {
+        }
+
         protected override void Validacija(object objekat)
         {
-           if (Kontroler.Instance.korisnici.Any(k => k.Korisnik.KorisnickoIme == ((Korisnik)objekat).KorisnickoIme))
-           {
+            if (Korisnik.KorisnickoIme != "Gost")
+                throw new SOException("Ne mozete izvrsiti ovu operaciju!");
+            if (Kontroler.Instance.korisnici.Any(k => k.Korisnik.KorisnickoIme == ((Korisnik)objekat).KorisnickoIme))
+            {
                 Debug.WriteLine($"Korisnik je vec prijavljen: {((Korisnik)objekat).KorisnickoIme}");
                 throw new SOException("Korisnik je vec prijavljen!");
-           }
+            }
         }
 
         protected override object IzvrsiKonkretnuOperaciju(object objekat)

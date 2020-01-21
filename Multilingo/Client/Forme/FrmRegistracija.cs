@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Client.Forme
@@ -17,7 +19,7 @@ namespace Client.Forme
         private void button1_Click(object sender, EventArgs e)
         {
             if (!Validacija()) return;
-            if(KontrolerKI.Instance.Registracija(txtKorIme.Text, txtPass.Text, txtIme.Text, txtPrezime.Text, 
+            if (KontrolerKI.Instance.Registracija(txtKorIme.Text, txtPass.Text, txtIme.Text, txtPrezime.Text,
                 txtEmail.Text, txtBroj.Text, (int)numGodine.Value, cbPol.SelectedItem.ToString(), out string poruka))
             {
                 MessageBox.Show(poruka);
@@ -52,7 +54,7 @@ namespace Client.Forme
                 txtPrezime.BackColor = Color.LightCoral;
                 rez = false;
             }
-            if (txtEmail.Text == string.Empty)
+            if (txtEmail.Text == string.Empty && !TestEmail(txtEmail.Text))
             {
                 txtEmail.BackColor = Color.LightCoral;
                 rez = false;
@@ -68,6 +70,11 @@ namespace Client.Forme
                 rez = false;
             }
             return rez;
+        }
+
+        private bool TestEmail(string text)
+        {
+            return Regex.IsMatch(text, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
         }
     }
 }

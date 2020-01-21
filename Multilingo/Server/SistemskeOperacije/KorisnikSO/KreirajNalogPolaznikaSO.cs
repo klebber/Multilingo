@@ -5,9 +5,17 @@ namespace Server.SistemskeOperacije.KorisnikSO
 {
     class KreirajNalogPolaznikaSO : OpstaSistemskaOperacija
     {
+        public KreirajNalogPolaznikaSO(Korisnik korisnik) : base(korisnik)
+        {
+        }
+
         protected override void Validacija(object objekat)
         {
+            if(Korisnik.KorisnickoIme != "Gost")
+                throw new SOException("Ne mozete izvrsiti ovu operaciju!");
             Korisnik k = objekat as Polaznik;
+            if(k.KorisnickoIme.ToUpper() == "GOST")
+                throw new SOException("Ne mozete koristiti ovo korisnicko ime!");
             if (Broker.Instance.Select(new Korisnik(), k.KorisnickoIme) != null)
             {
                 throw new SOException("Ovo korisnicko ime je zauzeto!");

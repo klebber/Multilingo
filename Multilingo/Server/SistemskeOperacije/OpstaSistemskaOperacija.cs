@@ -10,6 +10,13 @@ namespace Server.SistemskeOperacije
 {
     public abstract class OpstaSistemskaOperacija
     {
+        public Korisnik Korisnik { get; }
+
+        public OpstaSistemskaOperacija(Korisnik korisnik)
+        {
+            Korisnik = korisnik;
+        }
+
         protected abstract void Validacija(object objekat);
 
         public object IzvrsiSO(object objekat)
