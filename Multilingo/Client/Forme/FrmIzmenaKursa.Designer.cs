@@ -110,7 +110,7 @@
             this.Controls.Add(this.txtJezik);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FrmIzmenaKursa";
-            this.Text = "FrmIzmenaKursa";
+            this.Text = "Izmena Kursa";
             ((System.ComponentModel.ISupportInitialize)(this.numBr)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -218,7 +218,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmRegistracija";
-            this.Text = "FrmRegistracija";
+            this.Text = "Registracija";
             ((System.ComponentModel.ISupportInitialize)(this.numGodine)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

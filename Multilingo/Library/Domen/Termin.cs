@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Domen
 {
@@ -16,8 +13,8 @@ namespace Library.Domen
         public DateTime Datum { get; set; }
         public int IDPredavaca { get; set; }
 
-        public string Tabela => "Terminn"; //TODO obrisi jedno n
-        public string Alias => "terminn";
+        public string Tabela => "Termin";
+        public string Alias => "termin";
         public string InsertValues => $"{IDKursa}, '{Vreme}', '{Datum.ToString("yyyy-MM-dd")}', {IDPredavaca}";
         public string UpdateValues => $"Vreme = '{Vreme}'";
         public string Join => "";

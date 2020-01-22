@@ -266,7 +266,7 @@
             this.Controls.Add(this.txtJezik);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FrmUnosKursa";
-            this.Text = "FrmUnosKursa";
+            this.Text = "Unos Kursa";
             ((System.ComponentModel.ISupportInitialize)(this.numBroj)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

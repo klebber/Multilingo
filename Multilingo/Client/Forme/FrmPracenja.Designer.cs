@@ -82,7 +82,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmPracenja";
-            this.Text = "FrmPracenja";
+            this.Text = "Pracenja";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmPracenja_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dvgPracenja)).EndInit();
             this.ResumeLayout(false);

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Domen
 {
@@ -19,7 +16,7 @@ namespace Library.Domen
         public string Alias => "kurs";
         public string InsertValues => $"{BrojRaspolozivihMesta}, '{Jezik}', '{Nivo}'";
         public string UpdateValues => $"BrojRaspolozivihMesta = {BrojRaspolozivihMesta}, Jezik = '{Jezik}', Nivo = '{Nivo}'";
-        public string Join => "left join Pracenje pracenje on pracenje.IDKursa=kurs.IDKursa";
+        public string Join => BrojRaspolozivihMesta != -1 ? "" : "left join Pracenje pracenje on pracenje.IDKursa=kurs.IDKursa";
         public string InsertedOutput => "output inserted.IDKursa";
 
         public List<IDomenskiObjekat> ListaObjekata(SqlDataReader reader)

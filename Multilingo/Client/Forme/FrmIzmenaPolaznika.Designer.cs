@@ -115,7 +115,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FrmIzmenaPolaznika";
-            this.Text = "FrmIzmenaPolaznika";
+            this.Text = "Izmena Polaznika";
             ((System.ComponentModel.ISupportInitialize)(this.numGodine)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

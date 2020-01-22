@@ -69,6 +69,7 @@
     <Compile Include="SistemskeOperacije\KursSO\KreirajKursSO.cs" />
     <Compile Include="SistemskeOperacije\KursSO\NadjiKurseveSO.cs" />
     <Compile Include="SistemskeOperacije\KursSO\ObrisiKursSO.cs" />
+    <Compile Include="SistemskeOperacije\KursSO\OdaberiKurseveSO.cs" />
     <Compile Include="SistemskeOperacije\KursSO\VratiKurseveSO.cs" />
     <Compile Include="SistemskeOperacije\OpstaSistemskaOperacija.cs" />
     <Compile Include="SistemskeOperacije\PracenjeSO\NadjiPracenjaKursevaSO.cs" />

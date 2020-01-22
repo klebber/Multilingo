@@ -114,7 +114,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmTermini";
-            this.Text = "FrmTermini";
+            this.Text = "Termini";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmTermini_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dvgTermini)).EndInit();
             this.ResumeLayout(false);

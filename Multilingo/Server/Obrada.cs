@@ -130,6 +130,7 @@ namespace Server
                         odgovor.Objekat = zahtev.Objekat;
                         break;
                      case Operacija.OdaberiKurseve:
+                        odgovor.Poruka = (string)new OdaberiKurseveSO(Korisnik).IzvrsiSO(zahtev.Objekat);
                         break;
                      case Operacija.VratiPracenjaKurseva:
                         odgovor.Objekat = (List<Pracenje>)new VratiPracenjaKursevaSO(Korisnik).IzvrsiSO(new Pracenje());

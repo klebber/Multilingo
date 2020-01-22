@@ -1,10 +1,6 @@
 ﻿using Library;
 using Library.Domen;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server.SistemskeOperacije.PracenjeSO
 {
@@ -16,13 +12,17 @@ namespace Server.SistemskeOperacije.PracenjeSO
 
         protected override void Validacija(object objekat)
         {
-            if (!(Korisnik is Administrator))
+            if (Korisnik.KorisnickoIme == "Gost")
                 throw new SOException("Ne mozete izvrsiti ovu operaciju!");
         }
 
         protected override object IzvrsiKonkretnuOperaciju(object objekat)
         {
-            object ob = Broker.Instance.Select((Pracenje)objekat);
+            object ob;
+            if (Korisnik is Administrator)
+                ob = Broker.Instance.Select((Pracenje)objekat);
+            else
+                ob = Broker.Instance.Select((Pracenje)objekat, $"IDKorisnika = {Korisnik.IDKorisnika}");
             return ob == null ? new List<Pracenje>() : ((List<IDomenskiObjekat>)ob).ConvertAll(o => (Pracenje)o);
         }
     }

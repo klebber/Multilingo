@@ -1,6 +1,5 @@
 ﻿using Library.Domen;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -18,6 +17,7 @@ namespace Client.Forme
         {
             InitializeComponent();
             CenterToScreen();
+            Text = "Multilingo - " + Sesija.Instance.Korisnik.KorisnickoIme + " (Administrator)";
             KontrolerKI.Instance.IzmenaKurseva += K_IzmenjenKurs;
             KontrolerKI.Instance.IzmenaPolaznika += P_IzmenjeniPolaznici;
             KontrolerKI.Instance.VratiKurseve();

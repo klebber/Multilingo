@@ -178,6 +178,15 @@ namespace Client
             });
         }
 
+        public void OdaberiKurseve(List<Kurs> kursevi)
+        {
+            Komunikacija.Instance.PosaljiZahtev(new Zahtev()
+            {
+                Operacija = Operacija.OdaberiKurseve,
+                Objekat = kursevi
+            });
+        }
+
         public void ObrisiKurs(Kurs kurs)
         {
             Komunikacija.Instance.PosaljiZahtev(new Zahtev()
@@ -295,6 +304,9 @@ namespace Client
                             MessageBox.Show(o.Poruka);
                             break;
                         case Operacija.AzurirajKurs:
+                            MessageBox.Show(o.Poruka);
+                            break;
+                        case Operacija.OdaberiKurseve:
                             MessageBox.Show(o.Poruka);
                             break;
                         case Operacija.ObrisiKurs:

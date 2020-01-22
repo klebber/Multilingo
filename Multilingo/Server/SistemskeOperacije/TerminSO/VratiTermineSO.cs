@@ -1,11 +1,7 @@
 ﻿using Library;
 using Library.Domen;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server.SistemskeOperacije.TerminSO
 {
@@ -23,7 +19,19 @@ namespace Server.SistemskeOperacije.TerminSO
 
         protected override object IzvrsiKonkretnuOperaciju(object objekat)
         {
-            object ob = Broker.Instance.Select((Termin)objekat);
+            object ob;
+            if (Korisnik is Administrator)
+                ob = Broker.Instance.Select((Termin)objekat);
+            else
+            {
+                object temp = Broker.Instance.Select(new Pracenje(), $"IDKorisnika = {Korisnik.IDKorisnika}");
+                List<Pracenje> pracenja = temp == null ? new List<Pracenje>() : ((List<IDomenskiObjekat>)temp).ConvertAll(o => (Pracenje)o);
+                string kursevi = string.Join(",", pracenja.Select(p => p.IDKursa.ToString()).ToList());
+                if (kursevi != string.Empty)
+                    ob = Broker.Instance.Select((Termin)objekat, $"IDKursa in ({kursevi})");
+                else
+                    ob = null;
+            }
             return ob == null ? new List<Termin>() : ((List<IDomenskiObjekat>)ob).ConvertAll(o => (Termin)o);
         }
     }
