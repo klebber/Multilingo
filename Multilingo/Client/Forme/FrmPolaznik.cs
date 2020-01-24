@@ -18,6 +18,7 @@ namespace Client.Forme
             KontrolerKI.Instance.IzmenaPracenja += P_IzmenjeniPracenja;
             KontrolerKI.Instance.IzmenaTermina += T_IzmenjeniTermini;
             KontrolerKI.Instance.VratiKurseve();
+            dvgTermini.RowHeadersVisible = false;
             dvgKursevi.BackgroundColor = Color.WhiteSmoke;
             dvgPracenja.BackgroundColor = Color.WhiteSmoke;
             dvgTermini.BackgroundColor = Color.WhiteSmoke;
@@ -67,9 +68,9 @@ namespace Client.Forme
             dvgKursevi.DataSource = KontrolerKI.Instance.kursevi.Select(k => new
             {
                 k.IDKursa,
-                k.BrojRaspolozivihMesta,
                 k.Jezik,
-                k.Nivo
+                k.Nivo,
+                k.BrojRaspolozivihMesta
             }).ToList();
             dvgKursevi.ClearSelection();
         }

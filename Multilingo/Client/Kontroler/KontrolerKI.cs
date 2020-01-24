@@ -12,7 +12,7 @@ namespace Client
 {
     class KontrolerKI
     {
-        private static KontrolerKI _INSTANCE;
+        private static readonly Lazy<KontrolerKI> lazy = new Lazy<KontrolerKI>(() => new KontrolerKI());
 
         public bool kraj;
         public FrmLogin frmLogin;
@@ -42,8 +42,7 @@ namespace Client
         {
             get
             {
-                if (_INSTANCE == null) _INSTANCE = new KontrolerKI();
-                return _INSTANCE;
+                return lazy.Value;
             }
         }
 

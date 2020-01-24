@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Diagnostics;
+using System;
 
 namespace Server
 {
     public class Broker
     {
-        private static Broker _INSTANCE;
+        private static readonly Lazy<Broker> lazy = new Lazy<Broker>(() => new Broker());
+
         private SqlConnection connection;
         private SqlTransaction transaction;
 
@@ -21,8 +23,7 @@ namespace Server
         {
             get
             {
-                if (_INSTANCE == null) _INSTANCE = new Broker();
-                return _INSTANCE;
+                return lazy.Value;
             }
         }
 

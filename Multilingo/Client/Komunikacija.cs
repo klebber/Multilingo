@@ -9,7 +9,8 @@ namespace Client
 {
     class Komunikacija
     {
-        private static Komunikacija _INSTANCE;
+        private static readonly Lazy<Komunikacija> lazy = new Lazy<Komunikacija>(() => new Komunikacija());
+
         private Socket klijentskiSocket;
         private NetworkStream stream;
         private BinaryFormatter formatter;
@@ -22,8 +23,7 @@ namespace Client
         {
             get
             {
-                if (_INSTANCE == null) _INSTANCE = new Komunikacija();
-                return _INSTANCE;
+                return lazy.Value;
             }
         }
 

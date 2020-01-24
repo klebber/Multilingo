@@ -1,10 +1,12 @@
 ﻿using Library.Domen;
+using System;
 
 namespace Client
 {
     class Sesija
     {
-        private static Sesija _INSTANCE;
+        private static readonly Lazy<Sesija> lazy = new Lazy<Sesija>(() => new Sesija());
+
         public Korisnik Korisnik { get; set; }
         private Sesija()
         {
@@ -15,8 +17,7 @@ namespace Client
         {
             get
             {
-                if (_INSTANCE == null) _INSTANCE = new Sesija();
-                return _INSTANCE;
+                return lazy.Value;
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Server
             ObradaKomponenti();
             Kontroler.Instance.PrijavljenNov += K_PrijavljenNov;
             OsveziDGV();
+            dataGridView1.RowHeadersVisible = false;
             dataGridView1.BackgroundColor = Color.WhiteSmoke;
         }
 

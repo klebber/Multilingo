@@ -7,12 +7,12 @@ namespace Server
 {
     public class Kontroler
     {
-        private static Kontroler _INSTANCE;
+        private static readonly Lazy<Kontroler> lazy = new Lazy<Kontroler>(() => new Kontroler());
+
         private Server server;
         public delegate void PrijavljenNovEventHandler();
         public event PrijavljenNovEventHandler PrijavljenNov;
         internal List<Obrada> korisnici;
-
         public bool status;
 
         private Kontroler()
@@ -25,8 +25,7 @@ namespace Server
         {
             get
             {
-                if (_INSTANCE == null) _INSTANCE = new Kontroler();
-                return _INSTANCE;
+                return lazy.Value;
             }
         }
 

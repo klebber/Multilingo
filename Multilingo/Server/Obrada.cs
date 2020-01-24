@@ -43,8 +43,7 @@ namespace Server
                     Zahtev zahtev = (Zahtev)formatter.Deserialize(stream);
                     Debug.WriteLine($">>> Server primio: {zahtev.Operacija} at {DateTime.Now.TimeOfDay.ToString()}");
                     Odgovor odgovor = GenerisiOdgovor(zahtev);
-                    if(odgovor == null)
-                        continue;
+                    if(odgovor == null) continue;
                     Debug.WriteLine($">>> Server poslao: {odgovor.Poruka} at {DateTime.Now.TimeOfDay.ToString()}");
                     formatter.Serialize(stream, odgovor);
                 }
