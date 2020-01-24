@@ -104,6 +104,10 @@ namespace Client
 
         private void CleanUp()
         {
+            if (kursevi != null) kursevi.Clear();
+            if (polaznici != null) polaznici.Clear();
+            if (pracenja != null) pracenja.Clear();
+            if (termini != null) termini.Clear();
             Sesija.Instance.Korisnik = null;
             kraj = false;
         }

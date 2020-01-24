@@ -142,5 +142,15 @@ namespace Client.Forme
                 KontrolerKI.Instance.NadjiKurseve(txtKursevi.Text);
             }
         }
+
+        private void tabKursevi_Click(object sender, EventArgs e)
+        {
+            dvgKursevi.ClearSelection();
+        }
+
+        private void tabPracenja_Click(object sender, EventArgs e)
+        {
+            dvgPracenja.ClearSelection();
+        }
     }
 }

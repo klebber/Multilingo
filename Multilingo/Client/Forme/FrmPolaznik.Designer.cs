@@ -118,6 +118,7 @@
             this.tabKursevi.TabIndex = 0;
             this.tabKursevi.Text = "Kursevi";
             this.tabKursevi.UseVisualStyleBackColor = true;
+            this.tabKursevi.Click += new System.EventHandler(this.tabKursevi_Click);
             // 
             // btnOdaberi
             // 
@@ -192,6 +193,7 @@
             this.tabPracenja.TabIndex = 1;
             this.tabPracenja.Text = "Pracenja";
             this.tabPracenja.UseVisualStyleBackColor = true;
+            this.tabPracenja.Click += new System.EventHandler(this.tabPracenja_Click);
             // 
             // dvgTermini
             // 
